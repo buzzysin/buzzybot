@@ -26,6 +26,7 @@
     "build:babel": "babel src -d dist --extensions=\".ts\" --ignore=\"**/__tests__\"",
     "build:tsc": "tsc -b",
     "build:watch": "run-p -l 'build:babel -- --watch' 'build:tsc -- --watch'",
+    "prepublish": "run-p build:babel build:tsc",
     "clean": "rimraf dist *.tsbuildinfo",
     "test": "echo \"Error: no test specified\" && exit 1"
   }

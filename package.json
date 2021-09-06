@@ -26,13 +26,13 @@
     "prebuild": "yarn clean",
     "build": "yarn lernap:run build:babel",
     "postbuild": "yarn lerna:run build:tsc",
-    "prepublish": "",
     "build:check": "yarn build && echo 'Build successful' && yarn clean",
     "build:watch": "yarn lernap:run build:watch",
     "test": "echo 'Error: no test specified' && exit 1"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "examples/*"
   ],
   "private": true,
   "dependencies": {}
