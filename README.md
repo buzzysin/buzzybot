@@ -114,7 +114,7 @@ The true features of this API come to light under the `protect` and `protectAll`
 
 The `ClassDecorator` factory `@slash.group` does **not** define a command, so using `@slash({ name: "..." })` is still required.
 
-However using `@slash({ groups: [] })` is almost functionally equivalent and is a viable alternative if you want rules and options to be scoped by group.
+However using `@slash({ groups: [...] })` is almost functionally equivalent and is a viable alternative if you want rules and options to be scoped by group.
 
 > _This is almost analogous to the @define() decorator in [Injex]. In fact, it [uses](./packages/injex-discord-plugin/src/decorators/slash.ts) it_.
 
@@ -222,7 +222,7 @@ export class BankFundsCommand {
 
 ##### (Almost) Automatic
 
-Because of [Injex]'s ability to read and register command files, any decorated command class is registered and immediately available for use. The full power of this framework isn't even realised fully here! _(Yet?)_
+Because of [Injex][injex]'s ability to read and register command files, any decorated command class is registered and immediately available for use. The full power of this framework isn't even realised fully here! _(Yet?)_
 
 ##### Granular Protection
 
@@ -252,21 +252,21 @@ This is a proof-of-concept project only. Use at your own risk, as this library i
 
 Projects
 
-![For putting up with Discord HQ and their weird policies](https://github.com/discordjs.png?size=50)
-![For making monorepos easier (?)](https://github.com/lerna.png?size=50)
+![discordjs](https://github.com/discordjs.png?size=50 "For putting up with Discord HQ and their weird policies")
+![lerna](https://github.com/lerna.png?size=50 "For making monorepos easier (?)")
 
 People
 
-![For being and active maintainer of an awesome framework](https://github.com/uditalias.png?size=50)
-![For making me love hating Typescript](https://github.com/leone25.png?size=50)
+![uditalias](https://github.com/uditalias.png?size=50 "For being and active maintainer of an awesome framework")
+![leone25](https://github.com/leone25.png?size=50 "For making me love hating Typescript")
 
 ---
 
-[![🐝](https://github.com/buzzysin.png?size=50)][@buzzysin]
+![🐝](https://github.com/buzzysin.png?size=50 "🐝")
 
 Copyright &copy; [@buzzysin] 2021
 
-[@buzzysin]: (https://github.com/buzzysin)
-[injex]: (https://github.com/uditalias/injex)
-[discord-js]: (https://discordjs.guide)
-[discord-api-subcmd]: (https://discord.com/developers/docs/interactions/application-commands#subcommands-and-subcommand-groups)
+[@buzzysin]: https://github.com/buzzysin
+[injex]: https://github.com/uditalias/injex
+[discord-js]: https://discordjs.guide
+[discord-api-subcmd]: https://discord.com/developers/docs/interactions/application-commands#subcommands-and-subcommand-groups
