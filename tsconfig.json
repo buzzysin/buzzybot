@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "target": "ES5",
+    "paths": {
+      "@buzzybot/buzzybot": ["./packages/buzzybot/src"],
+      "@buzzybot/buzzybot/*": ["./packages/buzzybot/src/*"],
+      "@buzzybot/injex-discord-plugin": ["./packages/injex-discord-plugin/src"],
+      "@buzzybot/injex-discord-plugin/*": ["./packages/injex-discord-plugin/src/*"]
+    },
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "downlevelIteration": true,
+    "emitDeclarationOnly": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "inlineSourceMap": true,
+    "skipLibCheck": true,
+    "strict": true
+  },
+  "compileOnSave": true
+}

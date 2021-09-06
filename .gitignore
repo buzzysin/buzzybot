@@ -1,0 +1,16 @@
+# Artefacts 
+*.log
+*.tsbuildinfo
+**/coverage
+
+# Built files
+**/dist/**
+
+# Node/yarn
+node_modules
+*.lock
+*-lock.json
+
+# Other
+.env
+**/.vscode

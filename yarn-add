@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+DEV=""
+while getopts D opt; do 
+  case "${opt}" in
+    D) DEV="--dev"
+  esac
+done
+
+for i in "${@}"; do
+  yarn add $i ${DEV}
+done
