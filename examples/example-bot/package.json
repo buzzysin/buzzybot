@@ -3,9 +3,9 @@
   "license": "ISC",
   "main": "dist/index.js",
   "name": "@buzzybot/example-bot",
-  "version": "0.0.0-alpha.0",
+  "version": "0.0.0-alpha.1",
   "dependencies": {
-    "@buzzybot/cli": "^0.0.0-alpha.0"
+    "@buzzybot/cli": "^0.0.0-alpha.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
@@ -27,6 +27,7 @@
     "ts-jest": "^27.0.5",
     "typescript": "^4.4.2"
   },
+  "files": [],
   "scripts": {
     "build": "run-p build:babel build:tsc",
     "build:babel": "babel src -d dist --extensions=\".ts\" --ignore=\"**/__tests__\"",
@@ -37,5 +38,6 @@
     "prestart": "[ ! -d dist ] && yarn build || run-s clean build",
     "start": "node dist",
     "test": "echo \"Error: no test specified\" && exit 1"
-  }
+  },
+  "private": true
 }

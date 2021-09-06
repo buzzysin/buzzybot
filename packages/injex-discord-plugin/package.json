@@ -3,9 +3,9 @@
   "description": "Integration of Discord.JS and Injex APIs. Very Alpha. Very buggy.",
   "license": "ISC",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "name": "@buzzybot/injex-discord-plugin",
-  "version": "0.0.0-alpha.1",
+  "types": "dist/index.d.ts",
+  "version": "0.0.0-alpha.2",
   "dependencies": {
     "@discordjs/builders": "^0.6.0",
     "@discordjs/rest": "^0.1.0-canary.0",
@@ -34,14 +34,16 @@
     "ts-jest": "^27.0.5",
     "typescript": "^4.4.2"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [],
   "scripts": {
     "build:babel": "babel src -d dist --extensions='.ts' --ignore='**/__tests__'",
     "build:tsc": "tsc -b",
     "build:watch": "run-p -l 'build:babel -- --watch' 'build:tsc -- --watch'",
-    "prepublish": "run-p build:babel build:tsc",
     "clean": "rimraf dist *.tsbuildinfo",
+    "prepublish": "run-p build:babel build:tsc",
     "test": "echo 'Error: no test specified' && exit 1"
-  },
-  "gitHead": "fe1f789a99752ae92247630b2874f93055353981"
+  }
 }
