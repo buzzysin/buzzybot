@@ -31,6 +31,7 @@ This is mainly a project to develop my understanding of:
 
 - Typescript
 - Industry-standard publishing lifecycle of NPM projects
+- Continuous integration/deployment and workflows/actions
 
 In no way is this expected to be used in a serious manner (see [disclaimers](#disclaimers)).
 
@@ -114,7 +115,7 @@ The true features of this API come to light under the `protect` and `protectAll`
 
 The `ClassDecorator` factory `@slash.group` does **not** define a command, so using `@slash({ name: "..." })` is still required.
 
-However using `@slash({ groups: [...] })` is almost functionally equivalent and is a viable alternative if you want rules and options to be scoped by group.
+However using `@slash({ groups: [] })` is almost functionally equivalent and is a viable alternative if you want rules and options to be scoped by group.
 
 > _This is almost analogous to the @define() decorator in [Injex]. In fact, it [uses](./packages/injex-discord-plugin/src/decorators/slash.ts) it_.
 

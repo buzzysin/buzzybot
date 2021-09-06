@@ -1,8 +1,11 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "src"
+    "outDir": "bin",
   },
-  "references": []
+  "references": [],
+  "include": [
+    "src",
+    "package.json"
+  ]
 }

@@ -8,7 +8,9 @@
       "@buzzybot/buzzybot": ["./packages/buzzybot/src"],
       "@buzzybot/buzzybot/*": ["./packages/buzzybot/src/*"],
       "@buzzybot/injex-discord-plugin": ["./packages/injex-discord-plugin/src"],
-      "@buzzybot/injex-discord-plugin/*": ["./packages/injex-discord-plugin/src/*"]
+      "@buzzybot/injex-discord-plugin/*": ["./packages/injex-discord-plugin/src/*"],
+      "@buzzybot/cli": ["./packages/cli/src"],
+      "@buzzybot/cli/*": ["./packages/cli/src/*"]
     },
     "composite": true,
     "declaration": true,
@@ -21,6 +23,7 @@
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "inlineSourceMap": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true
   },
