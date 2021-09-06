@@ -1,7 +1,7 @@
 {
   "description": "A hopeless attempt at writing a cli for @buzzybot",
   "name": "@buzzybot/cli",
-  "version": "0.0.0-alpha.2",
+  "version": "0.0.0-alpha.3",
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.4",
