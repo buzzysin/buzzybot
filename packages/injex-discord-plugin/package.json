@@ -41,5 +41,6 @@
     "build:watch": "run-p -l 'build:babel -- --watch' 'build:tsc -- --watch'",
     "clean": "rimraf dist *.tsbuildinfo",
     "test": "echo 'Error: no test specified' && exit 1"
-  }
+  },
+  "gitHead": "fe1f789a99752ae92247630b2874f93055353981"
 }

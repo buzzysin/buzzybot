@@ -3,7 +3,6 @@
     "baseUrl": ".",
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "dist",
     "target": "ES5",
     "paths": {
       "@buzzybot/buzzybot": ["./packages/buzzybot/src"],

@@ -1,6 +1,13 @@
 {
-  "packages": ["packages/*"],
-  "version": "independent",
+  "$schema": "https://json.schemastore.org/lerna.json",
+  "command": {
+    "publish": {
+      "ignoreChanges": ["examples/*"],
+      "message": "🐉 (lerna): publish"
+    }
+  },
   "npmClient": "yarn",
-  "useWorkspaces": true
+  "packages": ["packages/*", "examples/*"],
+  "useWorkspaces": true,
+  "version": "independent"
 }
