@@ -1,7 +1,7 @@
 {
   "description": "A hopeless attempt at writing a cli for @buzzybot",
   "name": "@buzzybot/cli",
-  "version": "0.0.0-alpha.1",
+  "version": "0.0.0-alpha.2",
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.4",
@@ -28,7 +28,7 @@
     "build:babel": "babel src -d dist --extensions=\".ts\" --ignore=\"**/__tests__\"",
     "build:tsc": "tsc -b",
     "build:watch": "run-p -l 'build:babel -- --watch' 'build:tsc -- --watch'",
-    "prepublish": "run-p build:babel build:tsc",
+    "prepublishOnly": "run-p build:babel build:tsc",
     "clean": "rimraf dist *.tsbuildinfo",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
