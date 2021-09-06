@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "name": "@buzzybot/injex-discord-plugin",
-  "version": "0.0.0-alpha.1",
+  "version": "0.0.0-alpha.2",
   "dependencies": {
     "@discordjs/builders": "^0.6.0",
     "@discordjs/rest": "^0.1.0-canary.0",
