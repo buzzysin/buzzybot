@@ -3,7 +3,7 @@
   "command": {
     "publish": {
       "ignoreChanges": ["examples/*", "*.md"],
-      "message": "🐉 (lerna): publish"
+      "message": "🐉 (lerna): publish - %s"
     }
   },
   "npmClient": "yarn",
