@@ -5,10 +5,10 @@
   "main": "dist/index.js",
   "name": "@buzzybot/buzzybot",
   "types": "dist/index.d.ts",
-  "version": "0.0.0-alpha.0",
+  "version": "0.0.0-alpha.1",
   "private": true,
   "dependencies": {
-    "@buzzybot/injex-discord-plugin": "^0.0.0-alpha.0",
+    "@buzzybot/injex-discord-plugin": "^0.0.0-alpha.1",
     "@injex/core": "^3.0.0-alpha.6",
     "@injex/node": "^3.0.0-alpha.6",
     "@injex/stdlib": "^3.0.0-alpha.6",
