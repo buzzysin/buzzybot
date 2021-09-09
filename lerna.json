@@ -3,11 +3,11 @@
   "command": {
     "publish": {
       "ignoreChanges": ["examples/*", "*.md"],
-      "message": "🐉 (lerna): publish - %s"
+      "message": "🐉 (lerna): publish"
     }
   },
   "npmClient": "yarn",
   "packages": ["packages/*", "examples/*"],
   "useWorkspaces": true,
-  "version": "0.0.0-alpha.6"
+  "version": "0.0.0-alpha.5"
 }

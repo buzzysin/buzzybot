@@ -17,6 +17,10 @@ export const bzInit = createCommand("init")
   .addOption(
     createOption("-m, --middleware [middleware]", "the folder to store middleware classes").default("middleware")
   )
+  .addOption(createOption("-C, --client [npmClient]", "the client to use when installing dependencies"))
+  .addOption(
+    createOption("-A, --client-args [clientArgs...]", "the arguments passed to the client during install").default([])
+  )
   .addOption(optForce)
 
   .action(actionBzInit);

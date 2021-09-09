@@ -34,5 +34,6 @@
     "packages/*",
     "examples/*"
   ],
-  "private": true
+  "private": true,
+  "dependencies": {}
 }
