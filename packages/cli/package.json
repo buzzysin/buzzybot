@@ -6,7 +6,7 @@
   },
   "main": "./bin/buzzybot.js",
   "license": "ISC",
-  "version": "0.0.0-alpha.6",
+  "version": "0.0.0-alpha.7",
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.4",
@@ -36,7 +36,7 @@
     "build:babel": "babel src -d bin --extensions=\".ts\" --ignore=\"**/__tests__\"",
     "build:tsc": "tsc -b",
     "build:watch": "run-p -l 'build:babel -- --watch' 'build:tsc -- --watch'",
-    "prepare": "run-p build:babel build:tsc && chmod +x ./bin/commands/bz.js",
+    "prepare": "run-p build:babel build:tsc",
     "clean": "rimraf bin *.tsbuildinfo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
