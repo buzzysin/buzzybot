@@ -36,7 +36,7 @@
     "build:babel": "babel src -d bin --extensions=\".ts\" --ignore=\"**/__tests__\"",
     "build:tsc": "tsc -b",
     "build:watch": "run-p -l 'build:babel -- --watch' 'build:tsc -- --watch'",
-    "prepublish": "run-p build:babel build:tsc",
+    "prepare": "run-p build:babel build:tsc && chmod +x ./bin/commands/bz.js",
     "clean": "rimraf bin *.tsbuildinfo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
