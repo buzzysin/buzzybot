@@ -1,7 +1,9 @@
 {
   "description": "A hopeless attempt at writing a cli for @buzzybot",
   "name": "@buzzybot/cli",
-  "bin": "./bin",
+  "bin": {
+    "bz": "./bin/commands/bz.js"
+  },
   "main": "./bin/buzzybot.js",
   "license": "ISC",
   "version": "0.0.0-alpha.5",
@@ -14,6 +16,8 @@
     "@babel/plugin-transform-runtime": "^7.15.0",
     "@babel/preset-env": "^7.15.4",
     "@babel/preset-typescript": "^7.15.0",
+    "@types/fs-extra": "^9.0.12",
+    "@types/inquirer": "^8.1.1",
     "@types/node": "^16.7.10",
     "babel-plugin-module-resolver": "^4.1.0",
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
@@ -39,6 +43,10 @@
   "gitHead": "5207fe1810d8236e20bf6bd38b84e51cfca9aaf1",
   "dependencies": {
     "chalk": "^4.1.2",
-    "commander": "^8.1.0"
+    "commander": "^8.1.0",
+    "esm": "^3.2.25",
+    "fs-extra": "^10.0.0",
+    "inquirer": "^8.1.2",
+    "pkg-install": "^1.0.0"
   }
 }
