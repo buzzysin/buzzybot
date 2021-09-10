@@ -1,8 +1,10 @@
 import { confirmQuestion } from "@buzzybot/cli/inquiry/standard";
-import logger, { infoString, Logger } from "@buzzybot/cli/logger";
+import logger, { Logger } from "@buzzybot/cli/logger";
+import getClient from "@buzzybot/cli/other/get-client";
+import merge from "@buzzybot/cli/other/merge";
 import { BzProjectConfig } from "@buzzybot/cli/other/types";
 import indexTemplate from "@buzzybot/cli/templates/index.template";
-import { magentaBright } from "chalk";
+import packageJsonTemplate from "@buzzybot/cli/templates/package.json.template";
 import { spawn } from "child_process";
 import { Command } from "commander";
 import { existsSync, mkdirp, writeJson } from "fs-extra";
@@ -76,7 +78,10 @@ const actionBzInit = async (dir: string, opts: BzInitOpts, command: Command) => 
   const dirPath = (...segments: string[]) => resolve(dirFullPath, ...segments);
   const projectExists = existsSync(dirPath("buzzybot.json"));
 
-  const projectJson: Partial<BzProjectConfig> = (projectExists && require(dirPath("buzzybot.json"))) || {};
+  const projectJson: Partial<BzProjectConfig> = merge(
+    { commands, middleware, version: require("../../package.json").version },
+    (projectExists && require(dirPath("buzzybot.json"))) || {}
+  );
 
   const projectCheck = await initWarning(
     log,
@@ -101,64 +106,45 @@ const actionBzInit = async (dir: string, opts: BzInitOpts, command: Command) => 
     log,
     dirExists && !packageJsonExists,
     force,
-    "There is no package.json in this directory. Would you like to run `npm init`?",
-    "executing `npm init`",
+    "There is no package.json in this directory. Would you like to run create one?",
+    "writing a new package.json",
     "Failed to initialise node project."
   );
 
   if (!npmInitCheck) return;
 
-  if (!packageJsonExists) {
-    await new Promise((resolve, reject) => {
-      const child = spawn("npm", ["init"], { cwd: dirPath() });
-
-      process.stdin.pipe(child.stdin);
-
-      child.stdout.on("data", (data: Buffer) => {
-        const lines = data.toString().split("\n");
-        for (let i = 0, len = lines.length; i < len; i++) {
-          const line = lines[i];
-          process.stdout.write([infoString(command), magentaBright`npm init`, line].join(" ") + (i < len ? "\n" : ""));
-        }
-      });
-
-      child.on("close", exitNo => {
-        if (exitNo === 0) return resolve(exitNo);
-        return reject(exitNo);
-      });
-    });
-  }
+  await writeJson(dirPath("package.json"), packageJsonTemplate({ ext, cwd: dirPath() }), { spaces: 2 });
 
   log.info("Updating dependencies...");
 
   const installOpts = {
     cwd: dirPath(),
-    stdio: "pipe" as const,
+    stdio: "inherit" as const,
     ...(npmClient ? { prefer: npmClient } : {}),
   };
 
-  await install(
-    {
-      "@buzzybot/injex-discord-plugin": `latest`,
-    },
-    installOpts
-  );
+  await writeJson(dirPath("package.json"), packageJsonTemplate({ ext, cwd: dirPath() }), { spaces: 2 });
+
+  await install({ "@buzzybot/injex-discord-plugin": "latest" }, installOpts);
 
   await install(
     {
-      "@buzzybot/cli": `latest`,
+      "@buzzybot/cli": "latest",
+      "@babel/core": "latest",
+      "@babel/cli": "latest",
+      "@babel/plugin-transform-runtime": "latest",
+      "@babel/plugin-proposal-decorators": "latest",
+      "@babel/plugin-proposal-class-properties": "latest",
+      "@babel/plugin-proposal-private-property-in-object": "latest",
+      "@babel/plugin-proposal-private-methods": "latest",
+      ...(ext === "ts"
+        ? { typescript: "latest", "@babel/preset-typescript": "latest", "babel-plugin-module-resolver": "latest" }
+        : {}),
     },
-    {
-      ...installOpts,
-      dev: true,
-    }
+    { ...installOpts, dev: true }
   );
 
   log.info("Writing buzzybot.json...");
-
-  projectJson.commands = commands;
-  projectJson.middleware = middleware;
-  projectJson.version = require("../../package.json").version;
 
   await writeJson(dirPath("buzzybot.json"), projectJson, { spaces: 2, flag: "w+" });
 
