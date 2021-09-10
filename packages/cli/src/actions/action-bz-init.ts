@@ -1,11 +1,12 @@
 import { confirmQuestion } from "@buzzybot/cli/inquiry/standard";
 import logger, { infoString, Logger } from "@buzzybot/cli/logger";
 import { BzProjectConfig } from "@buzzybot/cli/other/types";
+import indexTemplate from "@buzzybot/cli/templates/index.template";
 import { magentaBright } from "chalk";
 import { spawn } from "child_process";
 import { Command } from "commander";
 import { existsSync, mkdirp, writeJson } from "fs-extra";
-import { readdir } from "fs/promises";
+import { readdir, writeFile } from "fs/promises";
 import { prompt } from "inquirer";
 import { resolve } from "path";
 import { install } from "pkg-install";
@@ -16,6 +17,7 @@ export type BzInitOpts = {
   middleware: string;
   npmClient?: "yarn" | "npm";
   clientArgs: string[];
+  ext: "ts" | "js";
 };
 
 const initWarning = async (
@@ -48,7 +50,7 @@ const initWarning = async (
 
 const actionBzInit = async (dir: string, opts: BzInitOpts, command: Command) => {
   const log = logger(command);
-  const { force, commands, middleware, npmClient, clientArgs } = opts;
+  const { force, commands, middleware, npmClient, clientArgs, ext } = opts;
 
   log.info("Initialising new Discord.JS project");
 
@@ -169,6 +171,15 @@ const actionBzInit = async (dir: string, opts: BzInitOpts, command: Command) => 
   log.info("Writing project files...");
 
   // TODO: Templates
+
+  await writeFile(
+    dirPath("src/index.ts"),
+    indexTemplate({
+      ext,
+    })
+  );
+  await writeFile(dirPath("src/commands/ping.cmd.ts"), "export {}");
+  await writeFile(dirPath("src/middleware/admin.mdw.ts"), "export {}");
 
   log.success("Done.");
 };

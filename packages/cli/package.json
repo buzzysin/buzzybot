@@ -16,6 +16,7 @@
     "@babel/plugin-transform-runtime": "^7.15.0",
     "@babel/preset-env": "^7.15.4",
     "@babel/preset-typescript": "^7.15.0",
+    "@types/dedent": "^0.7.0",
     "@types/fs-extra": "^9.0.12",
     "@types/inquirer": "^8.1.1",
     "@types/node": "^16.7.10",
@@ -44,6 +45,7 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "commander": "^8.1.0",
+    "dedent": "^0.7.0",
     "esm": "^3.2.25",
     "fs-extra": "^10.0.0",
     "inquirer": "^8.1.2",
