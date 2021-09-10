@@ -30,7 +30,7 @@
   "files": [],
   "scripts": {
     "build": "run-p build:babel build:tsc",
-    "build:babel": "babel src -d dist --extensions=\".ts\" --ignore=\"**/__tests__\"",
+    "build:babel": "# babel src -d dist --extensions=\".ts\" --ignore=\"**/__tests__\"",
     "build:tsc": "# Building with `tsc` is disabled # tsc -b ",
     "build:watch": "run-p -l 'build:babel -- --watch' 'build:tsc -- --watch'",
     "clean": "rimraf dist *.tsbuildinfo",
