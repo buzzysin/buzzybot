@@ -2,7 +2,7 @@
   "name": "ping-bot-js",
   "author": "[GITHUB_USERNAME] <[GITHUB_USERNAME]@users.noreply.github.com>",
   "license": "ISC",
-  "version": "0.0.0",
+  "version": "0.0.0-alpha.9",
   "scripts": {
     "build:babel": "babel src -d dist --extensions=\".js\" --ignore=\"**/__tests__\"",
     "build:watch": "run-p -l 'build:babel -- --watch'",
@@ -18,7 +18,7 @@
     "@babel/plugin-proposal-private-methods": "^7.16.11",
     "@babel/plugin-proposal-private-property-in-object": "^7.16.7",
     "@babel/plugin-transform-runtime": "^7.17.0",
-    "@buzzybot/cli": "^0.0.0-alpha.5",
+    "@buzzybot/cli": "^0.0.0-alpha.9",
     "nodemon": "^2.0.15",
     "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.2"

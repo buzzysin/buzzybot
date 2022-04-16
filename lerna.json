@@ -3,15 +3,19 @@
   "command": {
     "publish": {
       "skipGit": true,
-      "ignoreChanges": ["examples/*", "*.md"],
+      "ignoreChanges": [
+        "examples/*",
+        "*.md"
+      ],
       "message": "🐉 (lerna): publish"
     },
-    "version": {
-
-    }
+    "version": {}
   },
   "npmClient": "npm",
-  "packages": ["packages/*", "examples/*"],
+  "packages": [
+    "packages/*",
+    "examples/*"
+  ],
   "useWorkspaces": true,
-  "version": "0.0.0-alpha.8"
+  "version": "0.0.0-alpha.9"
 }
