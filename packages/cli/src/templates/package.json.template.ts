@@ -26,6 +26,8 @@ export function packageJsonGenerator({ ext, cwd }: PackageJsonTemplateOpts = { e
       author: "[GITHUB_USERNAME] <[GITHUB_USERNAME]@users.noreply.github.com>",
       license: "ISC",
       version: "0.0.0",
+      private: true,
+      files: ["dist", "buzzybot.json"],
       scripts: {
         "build:babel": `babel src -d dist --extensions=".${ext}" --ignore="**/__tests__"`,
         "build:watch": `run-p -l 'build:babel -- --watch'${ext === "ts" ? " 'build:tsc -- --watch'" : ""}`,

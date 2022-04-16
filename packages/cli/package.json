@@ -31,15 +31,13 @@
     "typescript": "^4.4.2"
   },
   "files": [
-    "bin",
-    "src"
+    "bin"
   ],
   "scripts": {
     "build:babel": "babel src -d bin --extensions=\".ts\" --ignore=\"**/__tests__\"",
     "build:tsc": "tsc -b",
     "build:watch": "run-p -l 'build:babel -- --watch' 'build:tsc -- --watch'",
-    "postbuild": "chmod +x ./bin/*",
-    "prepare": "run-p build:babel build:tsc",
+    "prepublish": "npm run clean && run-p build:babel build:tsc",
     "clean": "rimraf bin *.tsbuildinfo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
