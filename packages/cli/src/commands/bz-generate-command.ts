@@ -1,6 +1,6 @@
-import logger from "@buzzybot/cli/logger";
+import { actionBzGenerateCommand } from "@buzzybot/cli/actions/action-bz-generate-command";
 import { createArgument, createCommand } from "commander";
-import { optForce } from "../options/opt-force";
+import { optForce } from "../user-input/opt-force";
 
 export const bzGenerateCommand = createCommand("slash")
   .description("create a class for handling slash commands")
@@ -9,7 +9,4 @@ export const bzGenerateCommand = createCommand("slash")
 
   .addOption(optForce)
 
-  .action(async (name, opts, command) => {
-    const log = logger(command);
-    log.success(name, opts);
-  });
+  .action(actionBzGenerateCommand);

@@ -6,7 +6,7 @@ export type GetClientOpts = {
 };
 export default function getClient({ cwd }: { cwd: string } = { cwd: process.cwd() }): "yarn" | "npm" {
   const packageLock = existsSync(resolve(cwd, "package-lock.json"));
-  const yarnLock = existsSync(resolve(cwd, "package-lock.json"));
+  const yarnLock = existsSync(resolve(cwd, "yarn.lock"));
 
   if (packageLock) return "npm";
   if (yarnLock) return "yarn";

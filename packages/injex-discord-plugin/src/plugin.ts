@@ -1,5 +1,6 @@
 import {
   SlashCommandBuilder,
+  SlashCommandOptionsOnlyBuilder,
   SlashCommandSubcommandBuilder,
   SlashCommandSubcommandGroupBuilder,
 } from "@discordjs/builders";
@@ -188,7 +189,7 @@ export class DiscordInjexPlugin implements IInjexPlugin {
         .setName(meta.name)
         .setDescription(meta.description);
 
-      if (meta.options) meta.options(builder);
+      if (meta.options) meta.options(builder as unknown as SlashCommandOptionsOnlyBuilder);
     }
 
     return builder;
@@ -217,7 +218,7 @@ export class DiscordInjexPlugin implements IInjexPlugin {
         .setName(meta.name)
         .setDescription(meta.description);
 
-      if (meta.options) meta.options(subCommandBuilder);
+      if (meta.options) meta.options(subCommandBuilder as unknown as SlashCommandOptionsOnlyBuilder);
 
       builder.addSubcommand(subCommandBuilder);
     }

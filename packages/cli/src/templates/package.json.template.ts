@@ -7,7 +7,11 @@ export type PackageJsonTemplateOpts = {
   cwd: string;
 };
 
-export default function packageJsonTemplate({ ext, cwd }: PackageJsonTemplateOpts = { ext: "ts", cwd: process.cwd() }) {
+export default function packageJsonTemplate({ ext, cwd }: PackageJsonTemplateOpts) {
+  return JSON.stringify(packageJsonGenerator({ ext, cwd }), null, 2);
+}
+
+export function packageJsonGenerator({ ext, cwd }: PackageJsonTemplateOpts = { ext: "ts", cwd: process.cwd() }) {
   const packageJson = {};
   const name = cwd.split("/").reverse()[0];
 
@@ -23,10 +27,19 @@ export default function packageJsonTemplate({ ext, cwd }: PackageJsonTemplateOpt
       license: "ISC",
       version: "0.0.0",
       scripts: {
-        test: "echo 'No test suite configured.' && exit 1",
+        "build:babel": `babel src -d dist --extensions=".${ext}" --ignore="**/__tests__"`,
+        "build:watch": `run-p -l 'build:babel -- --watch'${ext === "ts" ? " 'build:tsc -- --watch'" : ""}`,
+        clean: "rimraf dist *.tsbuildinfo",
+        dev: "nodemon dist",
+        test: 'echo "Error: no test specified" && exit 1',
+        ...(ext === "ts"
+          ? {
+              "build:tsc": "tsc -b",
+            }
+          : {}),
       },
     },
     packageJson,
-    "CONCAT"
+    "CONCAT_UNIQUE"
   );
 }

@@ -2,13 +2,15 @@ function primitive(x: any): x is number | string | symbol | undefined {
   return typeof x !== "object" && typeof x !== "function";
 }
 
-export default function merge(a: any, b: any, mode: "CONCAT" | "MERGE" = "MERGE"): any {
+export default function merge(a: any, b: any, mode: "CONCAT" | "CONCAT_UNIQUE" | "MERGE" = "MERGE"): any {
   if (primitive(a) || primitive(b)) {
     return b ?? a;
   }
   if (a instanceof Array && b instanceof Array) {
     if (mode === "CONCAT") {
       return [...a, ...b];
+    } else if (mode == "CONCAT_UNIQUE") {
+      return Array.from(new Set([...a, ...b]));
     } else {
       const rArr = Array.from({ length: Math.max(a.length, b.length) });
       return rArr.map((_, i) => merge(a[i], b[i], mode));
