@@ -1,8 +1,8 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
-import { SharedSlashCommandOptions } from "@discordjs/builders/dist/interactions/slashCommands/mixins/CommandOptions";
+import { SlashCommandBuilder, SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandBuilder } from "@discordjs/builders";
 import { IConstructor, MetadataHandlers } from "@injex/stdlib";
 import { Client, ClientOptions } from "discord.js";
 import { Middleware } from "../classes/middleware";
+
 
 export type TSlashCommandBuilderCallback<R = any> = (builder: SlashCommandBuilder) => R;
 export type TClassDecorator<C extends Function = any> = (target: IConstructor<C>) => IConstructor<any> | void;
@@ -41,8 +41,8 @@ export interface SlashMetadataPublic {
    * Configure options, if any
    */
   options?: (
-    builder: SharedSlashCommandOptions
-  ) => Omit<SharedSlashCommandOptions, "addSubcommand" | "addSubcommandGroup">;
+    builder: SlashCommandOptionsOnlyBuilder
+  ) => Omit<SlashCommandOptionsOnlyBuilder, "addSubcommand" | "addSubcommandGroup">;
 }
 
 export interface MiddlewareMetadata {

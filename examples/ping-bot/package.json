@@ -1,0 +1,36 @@
+{
+  "name": "ping-bot",
+  "author": "[GITHUB_USERNAME] <[GITHUB_USERNAME]@users.noreply.github.com>",
+  "license": "ISC",
+  "version": "0.0.0-alpha.9",
+  "scripts": {
+    "build:babel": "babel src -d dist --extensions=\".ts\" --ignore=\"**/__tests__\"",
+    "build:watch": "run-p -l 'build:babel -- --watch' 'build:tsc -- --watch'",
+    "clean": "rimraf dist *.tsbuildinfo",
+    "dev": "nodemon dist",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:tsc": "tsc -b"
+  },
+  "dependencies": {
+    "@buzzybot/injex-discord-plugin": "^0.0.0-alpha.9",
+    "@injex/core": "^3.1.0",
+    "@injex/node": "^3.1.0",
+    "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.9",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-proposal-decorators": "^7.17.9",
+    "@babel/plugin-proposal-private-methods": "^7.16.11",
+    "@babel/plugin-proposal-private-property-in-object": "^7.16.7",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-typescript": "^7.16.7",
+    "@buzzybot/cli": "^0.0.0-alpha.9",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "nodemon": "^2.0.15",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.6.3"
+  }
+}

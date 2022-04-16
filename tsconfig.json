@@ -3,10 +3,12 @@
     "baseUrl": ".",
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "ES5",
+    "target": "ES6",
     "paths": {
       "@buzzybot/buzzybot": ["./packages/buzzybot/src"],
       "@buzzybot/buzzybot/*": ["./packages/buzzybot/src/*"],
+      "@buzzybot/cli": ["./packages/cli/src"],
+      "@buzzybot/cli/*": ["./packages/cli/src/*"],
       "@buzzybot/injex-discord-plugin": ["./packages/injex-discord-plugin/src"],
       "@buzzybot/injex-discord-plugin/*": ["./packages/injex-discord-plugin/src/*"]
     },
@@ -21,6 +23,7 @@
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "inlineSourceMap": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true
   },

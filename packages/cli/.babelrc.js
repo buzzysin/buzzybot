@@ -8,8 +8,8 @@ module.exports = {
           "babel-plugin-module-resolver",
           {
             alias: {
-              "^@buzzybot/(\\w+)$": "../../packages/\\1/dist",
-              "^@buzzybot/(\\w+)/(.+)$": "../../packages/\\1/dist/\\2",
+              "^@buzzybot/(\\w+)$": "../../packages/\\1/bin",
+              "^@buzzybot/(\\w+)/(.+)$": "../../packages/\\1/bin/\\2",
             },
           },
         ],

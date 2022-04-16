@@ -2,12 +2,20 @@
   "$schema": "https://json.schemastore.org/lerna.json",
   "command": {
     "publish": {
-      "ignoreChanges": ["examples/*", "*.md"],
-      "message": "🐉 (lerna): publish - %s"
-    }
+      "skipGit": true,
+      "ignoreChanges": [
+        "examples/*",
+        "*.md"
+      ],
+      "message": "🐉 (lerna): publish"
+    },
+    "version": {}
   },
-  "npmClient": "yarn",
-  "packages": ["packages/*", "examples/*"],
+  "npmClient": "npm",
+  "packages": [
+    "packages/*",
+    "examples/*"
+  ],
   "useWorkspaces": true,
-  "version": "independent"
+  "version": "0.0.0-alpha.9"
 }
