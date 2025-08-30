@@ -1,0 +1,5 @@
+# 
+
+# bin -- accidentally added to repo. Uncomment in next push to prevent further additions
+dist
+node_modules
