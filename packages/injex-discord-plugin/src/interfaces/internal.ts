@@ -1,21 +1,40 @@
-import { SlashCommandBuilder, SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandBuilder } from "@discordjs/builders";
+import {
+  SlashCommandBuilder,
+  SlashCommandOptionsOnlyBuilder,
+  SlashCommandSubcommandBuilder,
+} from "@discordjs/builders";
 import { IConstructor, MetadataHandlers } from "@injex/stdlib";
 import { Client, ClientOptions } from "discord.js";
 import { Middleware } from "../classes/middleware";
+import { Hidden } from "../hidden";
 
-
-export type TSlashCommandBuilderCallback<R = any> = (builder: SlashCommandBuilder) => R;
-export type TClassDecorator<C extends Function = any> = (target: IConstructor<C>) => IConstructor<any> | void;
+export type TSlashCommandBuilderCallback<R = any> = (
+  builder: SlashCommandBuilder
+) => R;
+export type TClassDecorator<C extends Function = any> = (
+  target: IConstructor<C>
+) => IConstructor<any> | void;
 export type TMethodDecorator<C extends Function = any> = (
   target: { constructor: C },
   key: string | symbol,
   desc: TypedPropertyDescriptor<C>
 ) => TypedPropertyDescriptor<C> | void;
 
-export type IDiscordPluginCreateConfig = { token: string; clientId: string; devServer?: string } & {
+export type IDiscordPluginCreateConfig = {
+  /* Convert to hidden instance to avoid leaking sensitive information */
+  token: Hidden<string>;
+  botId: string;
+  guildId?: string;
+} & {
   client?: ClientOptions | Client;
 };
-export type IDiscordPluginConfig = { token: string; client: Client; clientId: string; devServer?: string };
+export type IDiscordPluginConfig = {
+  /* Convert to hidden instance to avoid leaking sensitive information */
+  token: Hidden<string>;
+  client: Client;
+  botId: string;
+  guildId?: string;
+};
 
 export type IInteractionConfig = {
   name: string;
@@ -42,7 +61,10 @@ export interface SlashMetadataPublic {
    */
   options?: (
     builder: SlashCommandOptionsOnlyBuilder
-  ) => Omit<SlashCommandOptionsOnlyBuilder, "addSubcommand" | "addSubcommandGroup">;
+  ) => Omit<
+    SlashCommandOptionsOnlyBuilder,
+    "addSubcommand" | "addSubcommandGroup"
+  >;
 }
 
 export interface MiddlewareMetadata {
@@ -50,7 +72,12 @@ export interface MiddlewareMetadata {
 }
 export interface SlashMetadataPrivate {
   // Hidden API
-  slash: "button" | "command" | "contextMenu" | "selectMenu" | "messageComponent";
+  slash:
+    | "button"
+    | "command"
+    | "contextMenu"
+    | "selectMenu"
+    | "messageComponent";
   /**
    * Defined root command callback (`run` unless configured otherwise)
    */
@@ -103,15 +130,24 @@ export interface SlashMetadataPrivate {
    */
   protectAll: ModuleNameOrType<Middleware>[];
 }
-export interface SlashMetadata extends SlashMetadataPublic, SlashMetadataPrivate {}
+export interface SlashMetadata
+  extends SlashMetadataPublic,
+    SlashMetadataPrivate {}
 
 export interface MessageMetadata {
   message: true;
 }
 
-export interface Metadata extends Partial<SlashMetadata>, Partial<MessageMetadata>, Partial<MiddlewareMetadata> {}
+export interface Metadata
+  extends Partial<SlashMetadata>,
+    Partial<MessageMetadata>,
+    Partial<MiddlewareMetadata> {}
 
 export interface MyMetadataHandlers<T> extends MetadataHandlers<T> {
   setMetadata: <K extends keyof T>(target: any, key: K, value: T[K]) => void;
-  pushMetadata: <K extends keyof T>(target: any, key: K, value: Unit<T[K]>) => void;
+  pushMetadata: <K extends keyof T>(
+    target: any,
+    key: K,
+    value: Unit<T[K]>
+  ) => void;
 }

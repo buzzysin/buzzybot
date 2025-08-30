@@ -1,8 +1,10 @@
-import inquirer, { prompt, prompts, Question, QuestionCollection } from "inquirer";
+/* @ts-ignore-next-line */
+import inquirer, { Question, QuestionCollection } from "inquirer";
 
 export interface Answers {
   confirm: boolean;
 }
+/* @ts-ignore-next-line */
 export type AnswerConfirm<N extends string = ""> = QuestionCollection<
   {
     [x in `confirm_${N}`]: boolean;

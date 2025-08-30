@@ -12,15 +12,23 @@ export default function setupDotenvTemplate(opts: SetupDotenvTemplateOpts) {
   /**
    * First load the .env info into process.env
    */
-  config();
+  // preserve any existing global env load
+  declare global {
+    var env: ReturnType<typeof config> | undefined;
+  }
+  globalThis.env = globalThis.env || config();
 
   /**
-   * Then we bind it so we can use it later 
-   * 
+   * Then we bind it so we can use it later
+   *
    * For more info about these variables, see the .env file
    */
-  export const devId     = process.env.DISCORD_DEV_ID${ext === "ts" ? "!" : ""};
-  export const devServer = process.env.DISCORD_DEV_SERVER${ext === "ts" ? "!" : ""};
-  export const apiToken  = process.env.DISCORD_API_TOKEN${ext === "ts" ? "!" : ""};
+  export const botId    = process.env.DISCORD_BOT_ID${ext === "ts" ? "!" : ""};
+  export const guildId  = process.env.DISCORD_GUILD_ID${
+    ext === "ts" ? "!" : ""
+  };
+  export const apiToken = process.env.DISCORD_API_TOKEN${
+    ext === "ts" ? "!" : ""
+  };
   `.trimStart();
 }

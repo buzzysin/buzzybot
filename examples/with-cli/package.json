@@ -1,0 +1,43 @@
+{
+  "name": "with-cli",
+  "author": "",
+  "license": "ISC",
+  "version": "1.0.0",
+  "private": true,
+  "files": [
+    "dist",
+    "buzzybot.json"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "build:watch": "tsup --watch",
+    "clean": "rimraf dist *.tsbuildinfo",
+    "dev": "nodemon dist",
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:types": "tsc -b",
+    "typecheck": "tsc --noEmit"
+  },
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "packageManager": "pnpm@10.15.0",
+  "devDependencies": {
+    "@buzzybot/cli": "workspace:*",
+    "@swc/core": "^1.13.5",
+    "nodemon": "^3.1.10",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^6.0.1",
+    "tslib": "^2.8.1",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@buzzybot/injex-discord-plugin": "workspace:*",
+    "@injex/core": "3.5.1",
+    "@injex/node": "3.5.1",
+    "@injex/stdlib": "3.5.1",
+    "discord.js": "^14.22.1",
+    "dotenv": "^17.2.1"
+  }
+}

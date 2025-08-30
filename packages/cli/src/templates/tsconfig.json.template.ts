@@ -9,9 +9,10 @@ export default function tsConfigJsonTemplate(opts: TsConfigJsonTemplateOpts) {
   return JSON.stringify(tsConfigJsonGenerator(opts), null, 2);
 }
 
-export function tsConfigJsonGenerator({ cwd }: TsConfigJsonTemplateOpts = { cwd: process.cwd() }) {
+export function tsConfigJsonGenerator(
+  { cwd }: TsConfigJsonTemplateOpts = { cwd: process.cwd() }
+) {
   const tsConfigJson = {};
-  const name = cwd.split("/").reverse()[0];
 
   try {
     const actualJson = require(resolve(cwd, "tsconfig.json"));
@@ -29,6 +30,8 @@ export function tsConfigJsonGenerator({ cwd }: TsConfigJsonTemplateOpts = { cwd:
           [`@src`]: ["./src"],
           [`@src/*`]: ["./src/*"],
         },
+        rootDir: "./src",
+        outDir: "./dist",
         esModuleInterop: true,
         downlevelIteration: true,
         experimentalDecorators: true,

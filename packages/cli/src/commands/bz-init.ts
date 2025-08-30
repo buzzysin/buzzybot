@@ -7,7 +7,7 @@ import { createCommand, createOption } from "commander";
 import { optForce } from "../user-input/opt-force";
 
 export const bzInit = createCommand("init")
-  .description("generate a new Discord.JS project")
+  .description("generate a new buzzybot project")
 
   .addArgument(argDir)
 
@@ -29,6 +29,8 @@ export const bzInit = createCommand("init")
       "true if project exists, false otherwise [currently " + Boolean(getConfig()) + "]"
     )
   )
+  .addOption(createOption("-K, --cli-version [version]", "the version of the CLI to use").default("latest"))
+  .addOption(createOption("-P, --plugin-version [version]", "the version of the plugin to use").default("latest"))
   .addOption(optForce)
 
   .action(actionBzInit)

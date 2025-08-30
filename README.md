@@ -1,4 +1,4 @@
-# `@buzzybot/buzzybot` <!-- omit in toc -->
+# Buzzybot monorepo
 
 - [Introduction](#introduction)
   - [What is this?](#what-is-this)

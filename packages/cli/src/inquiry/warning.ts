@@ -1,6 +1,8 @@
 import { confirmQuestion } from "@buzzybot/cli/inquiry/standard";
 import { Logger } from "@buzzybot/cli/logger";
-import { prompt } from "inquirer";
+import inquirer from "inquirer";
+
+const { prompt } = inquirer;
 
 export const forceWarning = async (
   log: Logger,
