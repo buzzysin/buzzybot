@@ -97,7 +97,7 @@ This `ClassDecorator` factory has three possible uses. It can be used to define 
 })
 export class ExampleOneCommand {
   /* must implement run(...) if the command is a root slash command ONLY */
-  async run(interaction: [ChatInputCommandInteraction]) {
+  async run(interaction: ChatInputCommandInteraction) {
     const user = interaction.options.getUser();
 
     if (user) {
