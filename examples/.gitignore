@@ -1,5 +1,9 @@
-# 
+# .gitignore
 
-# bin -- accidentally added to repo. Uncomment in next push to prevent further additions
+# Build and install files
+bin 
 dist
 node_modules
+
+# dotenv
+.env*
