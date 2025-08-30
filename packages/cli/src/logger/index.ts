@@ -1,6 +1,12 @@
-import { bold, green, red, white, yellow } from "chalk";
+import chalk from "chalk";
 import { Command } from "commander";
 import { inspect } from "util";
+
+const green = chalk.green;
+const yellow = chalk.yellow;
+const red = chalk.red;
+const white = chalk.white;
+const bold = chalk.bold;
 
 const processArgs = (...args: any[]) => {
   return args
@@ -12,10 +18,10 @@ const processArgs = (...args: any[]) => {
     .reduce((acc, strings) => acc.concat(...strings), []);
 };
 
-export const successString = (command: Command) => green`✔️  bz ${command.name()}`;
-export const infoString = (command: Command) => yellow`💡 bz ${command.name()}`;
-export const warningString = (command: Command) => bold`${white`⚠️  bz ${command.name()}`}`;
-export const errorString = (command: Command) => red`⛔ bz ${command.name()}`;
+export const successString = (command: Command) => green(`✔️  bz ${command.name()}`);
+export const infoString = (command: Command) => yellow(`💡 bz ${command.name()}`);
+export const warningString = (command: Command) => bold(`${white(`⚠️  bz ${command.name()}`)}`);
+export const errorString = (command: Command) => red(`⛔ bz ${command.name()}`);
 
 const success =
   (command: Command) =>

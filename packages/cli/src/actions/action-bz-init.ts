@@ -16,17 +16,20 @@ export type BzInitOpts = {
   commands: string;
   middleware: string;
 
-  npmClient?: "yarn" | "npm";
+  npmClient?: "yarn" | "npm" | "pnpm";
 
   skipInstalls: boolean;
   skipExtras: boolean;
+
+  cliVersion?: string;
+  pluginVersion?: string;
 
   force: boolean;
 };
 
 const actionBzInit = async (dir: string, opts: BzInitOpts, command: Command) => {
   const log = logger(command);
-  const { force, commands, middleware, npmClient, ext, skipExtras, skipInstalls } = opts;
+  const { force, commands, middleware, npmClient, ext, skipExtras, skipInstalls, cliVersion, pluginVersion } = opts;
 
   log.info("Initialising new Discord.JS project");
 
@@ -76,12 +79,12 @@ const actionBzInit = async (dir: string, opts: BzInitOpts, command: Command) => 
 
   if (!projectCheck) return;
 
-  await actionBzInitInstall(dir, { ext, force, npmClient, skipInstalls }, command);
+  await actionBzInitInstall(dir, { ext, force, npmClient, skipInstalls, cliVersion, pluginVersion }, command);
 
   log.info("Writing buzzybot.json...");
   await writeJson(dirPath("buzzybot.json"), projectJson, { spaces: 2, flag: "w+" });
 
-  actionBzInitFiles(dir, { ext, commands, middleware, skipExtras, force }, command);
+  await actionBzInitFiles(dir, { ext, commands, middleware, skipExtras, force }, command);
 
   log.success("Done.");
 };

@@ -8,7 +8,11 @@ export type IndexTemplateOpts = {
 
 const indexTemplate = (opts: IndexTemplateOpts) => {
   const { ext } = opts;
-  return dedent`${importTemplate({ ext, module: "./setup" })}`.trimStart();
+  return dedent`
+  ${importTemplate({ ext, value: "{ setup }", module: "./setup" })}
+
+  setup.bootstrap();
+  `.trimStart();
 };
 
 export default indexTemplate;

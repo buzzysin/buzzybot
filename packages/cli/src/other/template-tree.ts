@@ -1,5 +1,6 @@
 import { Tree } from "@buzzybot/cli/other/tree";
-import { mkdirp, writeFile } from "fs-extra";
+import { exists, mkdirp, writeFile } from "fs-extra";
+import logger from "../logger";
 
 export type Dict = Record<string, unknown>;
 export type TemplateFn<A extends Dict = Dict> = (opts: A) => string;
@@ -16,16 +17,24 @@ export type FsTemplateFn<T extends TemplateFn = TemplateFn> = {
   args: T extends TemplateFn<infer A> ? A : never;
 };
 
-// @ts-ignore
-export type FsFile<A extends Dict = Dict> = FsTemplateString | FsTemplateFn<TemplateFn<A>>;
+export type FsFile<A extends Dict = Dict> =
+  | FsTemplateString
+  // @ts-ignore
+  | FsTemplateFn<TemplateFn<A>>;
 
 export type FsDir = {
   name: string;
 };
 
-export class TemplateTree<A extends Dict = Dict> extends Tree<FsFile<A> | FsDir> {
-  async build() {
-    return this.execAsyncBfs(async node => {
+export class TemplateTree<A extends Dict = Dict> extends Tree<
+  FsFile<A> | FsDir
+> {
+  async build(
+    { force, log }: { force: boolean; log?: ReturnType<typeof logger> } = {
+      force: false,
+    }
+  ) {
+    return this.execAsyncBfs(async (node) => {
       const segments: string[] = [];
 
       let current: Tree<FsFile | FsDir> | null = node;
@@ -38,6 +47,15 @@ export class TemplateTree<A extends Dict = Dict> extends Tree<FsFile<A> | FsDir>
       const name = segments.join("/");
 
       if ("template" in node.value) {
+        const fileExists = await exists(name);
+
+        if (fileExists && !force) {
+          log?.warn(`File ${name} already exists. Skipping...`);
+          return;
+        } else if (fileExists && force) {
+          log?.info(`Overwriting existing file ${name}...`);
+        }
+
         await writeFile(
           name,
           typeof node.value.template === "string" /*  */

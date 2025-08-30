@@ -12,10 +12,10 @@
     - [`@slash`](#slash)
     - [`@slash.group` and `@slash.group.command`](#slashgroup-and-slashgroupcommand)
     - [`@slash.sub`](#slashsub)
-    - [Features](#features)
-      - [(Almost) Automatic](#almost-automatic)
-      - [Granular Protection](#granular-protection)
-      - [No faff](#no-faff)
+  - [Features](#features)
+    - [(Almost) Automatic](#almost-automatic)
+    - [Granular Protection](#granular-protection)
+    - [No faff](#no-faff)
 - [Disclaimers](#disclaimers)
 - [Thanks](#thanks)
 
@@ -65,6 +65,8 @@ It would help you if you were familiar with the [Discord.JS Guide][discord-js]. 
 ...
 ```
 
+You may find a fully functional (predicated on credential setup) example that uses the CLI in [examples/with-cli](./examples/with-cli).
+
 ### `@buzzybot/injex-discord-plugin`
 
 This [Injex] plugin introduces a few decorators to be used on classes.
@@ -95,7 +97,7 @@ This `ClassDecorator` factory has three possible uses. It can be used to define 
 })
 export class ExampleOneCommand {
   /* must implement run(...) if the command is a root slash command ONLY */
-  async run(interaction: CommandInteraction) {
+  async run(interaction: ChatInputCommandInteraction) {
     const user = interaction.options.getUser();
 
     if (user) {
@@ -170,7 +172,7 @@ export class BankFundsCommand {
     name: "increase",
     description: "Add `n` to the user's wallet.",
   })
-  fundsEditIncrease(command: CommandInteraction) {
+  fundsEditIncrease(command: ChatInputCommandInteraction) {
     // ... command.options.getUser() is defined
     // ... command.options.getInteger() is defined
   }
@@ -182,7 +184,7 @@ export class BankFundsCommand {
     name: "pay",
     description: "Add `n` to the user's wallet.",
   })
-  fundsTransactPay(command: CommandInteraction) {
+  fundsTransactPay(command: ChatInputCommandInteraction) {
     // ... command.options.getUser() is defined
     // ... command.options.getInteger() is NOT defined (not available in this group)
   }
@@ -212,34 +214,46 @@ export class BankFundsCommand {
     description: "Get the value of a wallet",
     options: optionalUserOption
   })
-  fundsGet(command: CommandInteraction) {
+  fundsGet(command: ChatInputCommandInteraction) {
     // command.options.user() is available
   }
 
 }
 ```
 
-#### Features
+### Features
 
-##### (Almost) Automatic
+#### (Almost) Automatic
 
 Because of [Injex][injex]'s ability to read and register command files, any decorated command class is registered and immediately available for use. The full power of this framework isn't even realised fully here! _(Yet?)_
 
-##### Granular Protection
+#### Granular Protection
 
 The `protect` and `protectAll` options available on each decorator provides you with base command-, group command-, endpoint- and _method_-level protection, hopefully making scoping permissions easier.
 
-##### No faff
+#### No faff
 
 No more of this:
 
 ```ts
+/* Skip these steps in your command handlers */
 if (!interaction.isCommand()) return;
 if (interaction.options.getSubcommand() !== subCommand) return;
-...
+/* ... etc... */
+/* ... interaction is (at least) ChatInputCommandInteraction, probably 😅 */
+
+/* If you have decorated with options, you no longer need to check for nullity */
+const userUnsafe: User | null = interaction.options.getUser("user")!; // worse option
+const userSafe: User = interaction.options.getUser("user", true); // better
 ```
 
 ... I mean, it is in the source code if you want to read it, but you don't have to type it!
+
+> #### Caveats as of DiscordJS v14
+>
+> As of Aug 2025, this library no longer supports **Discord.JS v13**. **Discord.JS v14** introduces several breaking changes, so be sure to read the migration guide.
+>
+> **Discord.JS v14** introduces better type safety at the cost of breaking their API - assumptions made about `SubCommandBuilder` and friends may no longer hold. However, the core concepts remain the same. In the future, I'd like to ensure that `@slash.{sub|group.command}` can infer the argument type of the method it decorates to further improve type safety, but that's another story.
 
 ## Disclaimers
 
@@ -263,9 +277,9 @@ People
 
 ---
 
-![🐝](https://github.com/buzzysin.png?size=50 "🐝")
+![✨](https://github.com/buzzysin.png?size=50 "✨")
 
-Copyright &copy; [@buzzysin] 2021
+Copyright &copy; [@buzzysin] 2025
 
 [@buzzysin]: https://github.com/buzzysin
 [injex]: https://github.com/uditalias/injex

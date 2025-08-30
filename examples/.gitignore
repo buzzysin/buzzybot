@@ -1,0 +1,9 @@
+# .gitignore
+
+# Build and install files
+bin 
+dist
+node_modules
+
+# dotenv
+.env*

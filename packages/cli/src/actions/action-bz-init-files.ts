@@ -4,22 +4,29 @@ import logger from "@buzzybot/cli/logger";
 import { fsPathFrom } from "@buzzybot/cli/other/fs-path-from";
 import getConfig from "@buzzybot/cli/other/get-config";
 import { TemplateTree } from "@buzzybot/cli/other/template-tree";
-import babelConfigJsTemplate from "@buzzybot/cli/templates/babel.config.js.template";
 import dotenvTemplate from "@buzzybot/cli/templates/dotenv.template";
 import indexTemplate from "@buzzybot/cli/templates/index.template";
-import commandClassTemplate from "@buzzybot/cli/templates/meta/command.class.template";
-import middlewareClassTemplate from "@buzzybot/cli/templates/meta/middleware.class.template";
+import commandClassTemplate from "@buzzybot/cli/templates/framework/command.class.template";
+import middlewareClassTemplate from "@buzzybot/cli/templates/framework/middleware.class.template";
 import setupBootstrapInjexTemplate from "@buzzybot/cli/templates/setup-bootstrap-injex.template";
 import setupDotenvTemplate from "@buzzybot/cli/templates/setup-dotenv.template";
 import setupTemplate from "@buzzybot/cli/templates/setup.template";
 import tsConfigJsonTemplate from "@buzzybot/cli/templates/tsconfig.json.template";
 import { Command } from "commander";
+import tsupConfigTemplate from "../templates/tsup.config.template";
 
-export type BzInitFilesOpts = Pick<BzInitOpts, "ext" | "commands" | "middleware" | "skipExtras" | "force"> & {};
+export type BzInitFilesOpts = Pick<
+  BzInitOpts,
+  "ext" | "commands" | "middleware" | "skipExtras" | "force"
+> & {};
 
 const T = TemplateTree;
 
-export const actionBzInitFiles = async (dir: string, opts: BzInitFilesOpts, command: Command) => {
+export const actionBzInitFiles = async (
+  dir: string,
+  opts: BzInitFilesOpts,
+  command: Command
+) => {
   const log = logger(command);
   const { ext, skipExtras, commands, middleware } = opts;
   const dirPath = fsPathFrom(dir);
@@ -27,7 +34,10 @@ export const actionBzInitFiles = async (dir: string, opts: BzInitFilesOpts, comm
   log.info("Writing project folders...");
 
   if (skipExtras != Boolean(getConfig()))
-    if (skipExtras) log.warn("Using `--skip-extras` other than default will not generate template files.");
+    if (skipExtras)
+      log.warn(
+        "Using `--skip-extras` other than default will not generate template files."
+      );
     else {
       const sanityCheck = await forceWarning(
         log,
@@ -77,15 +87,31 @@ export const actionBzInitFiles = async (dir: string, opts: BzInitFilesOpts, comm
               ]
         ),
         new T({ name: "setup" }, [
-          new T({ name: file("index"), template: setupTemplate, args: { ext } }),
-          new T({ name: file("setup-env"), template: setupDotenvTemplate, args: { ext } }),
-          new T({ name: file("setup-bootstrap-injex"), template: setupBootstrapInjexTemplate, args: { ext } }),
+          new T({
+            name: file("index"),
+            template: setupTemplate,
+            args: { ext },
+          }),
+          new T({
+            name: file("setup-env"),
+            template: setupDotenvTemplate,
+            args: { ext },
+          }),
+          new T({
+            name: file("setup-bootstrap-injex"),
+            template: setupBootstrapInjexTemplate,
+            args: { ext },
+          }),
         ]),
         new T({ name: file("index"), template: indexTemplate, args: { ext } }),
       ]),
       new T({ name: ".env", template: dotenvTemplate }),
-      new T({ name: "babel.config.js", template: babelConfigJsTemplate, args: { cwd: dirPath(), ext } }),
-      new T({ name: `${ext}config.json`, template: tsConfigJsonTemplate, args: { cwd: dirPath() } }),
+      new T({
+        name: `${ext}config.json`,
+        template: tsConfigJsonTemplate,
+        args: { cwd: dirPath() },
+      }),
+      new T({ name: `tsup.config.ts`, template: tsupConfigTemplate, args: { ext } })
     ].concat(
       ext === "ts"
         ? [

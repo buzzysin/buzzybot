@@ -7,11 +7,16 @@ export type PackageJsonTemplateOpts = {
   cwd: string;
 };
 
-export default function packageJsonTemplate({ ext, cwd }: PackageJsonTemplateOpts) {
+export default function packageJsonTemplate({
+  ext,
+  cwd,
+}: PackageJsonTemplateOpts) {
   return JSON.stringify(packageJsonGenerator({ ext, cwd }), null, 2);
 }
 
-export function packageJsonGenerator({ ext, cwd }: PackageJsonTemplateOpts = { ext: "ts", cwd: process.cwd() }) {
+export function packageJsonGenerator(
+  { ext, cwd }: PackageJsonTemplateOpts = { ext: "ts", cwd: process.cwd() }
+) {
   const packageJson = {};
   const name = cwd.split("/").reverse()[0];
 
@@ -28,18 +33,22 @@ export function packageJsonGenerator({ ext, cwd }: PackageJsonTemplateOpts = { e
       version: "0.0.0",
       private: true,
       files: ["dist", "buzzybot.json"],
-      scripts: {
-        "build:babel": `babel src -d dist --extensions=".${ext}" --ignore="**/__tests__"`,
-        "build:watch": `run-p -l 'build:babel -- --watch'${ext === "ts" ? " 'build:tsc -- --watch'" : ""}`,
-        clean: "rimraf dist *.tsbuildinfo",
-        dev: "nodemon dist",
-        test: 'echo "Error: no test specified" && exit 1',
-        ...(ext === "ts"
+      scripts: Object.assign(
+        {
+          build: "tsup",
+          "build:watch": "tsup --watch",
+          clean: "rimraf dist *.tsbuildinfo",
+          dev: "nodemon dist",
+          start: "node dist/index.js",
+          test: 'echo "Error: no test specified" && exit 1',
+        },
+        ext === "ts"
           ? {
-              "build:tsc": "tsc -b",
+              "build:types": "tsc -b",
+              typecheck: "tsc --noEmit",
             }
-          : {}),
-      },
+          : {}
+      ),
     },
     packageJson,
     "CONCAT_UNIQUE"

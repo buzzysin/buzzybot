@@ -4,14 +4,36 @@ import { fsPathFrom } from "@buzzybot/cli/other/fs-path-from";
 import { packageJsonGenerator } from "@buzzybot/cli/templates/package.json.template";
 import { Command } from "commander";
 import { existsSync, writeJson } from "fs-extra";
-import { install } from "pkg-install";
+import { install, SupportedPackageManagers } from "pkg-install";
+import installPnpm from "../other/install-pnpm";
+import getClient from "../other/get-client";
 
-export type BzInitInstallOpts = Pick<BzInitOpts, "ext" | "force" | "npmClient" | "skipInstalls"> & {};
+export type BzInitInstallOpts = Pick<
+  BzInitOpts,
+  | "ext"
+  | "force"
+  | "npmClient"
+  | "skipInstalls"
+  | "cliVersion"
+  | "pluginVersion"
+> & {};
 
-export const actionBzInitInstall = async (dir: string, opts: BzInitInstallOpts, command: Command) => {
+export const actionBzInitInstall = async (
+  dir: string,
+  opts: BzInitInstallOpts,
+  command: Command
+) => {
   const log = logger(command);
-  const { ext, force, npmClient, skipInstalls } = opts;
   const dirPath = fsPathFrom(dir);
+  const {
+    ext,
+    force,
+    npmClient = getClient({ cwd: dirPath() }),
+    skipInstalls,
+
+    cliVersion = "latest",
+    pluginVersion = "latest",
+  } = opts;
 
   log.info("Checking for package.json...");
 
@@ -28,32 +50,46 @@ export const actionBzInitInstall = async (dir: string, opts: BzInitInstallOpts, 
 
   // if (!npmInitCheck) return;
 
-  await writeJson(dirPath("package.json"), packageJsonGenerator({ ext, cwd: dirPath() }), { spaces: 2 });
+  await writeJson(
+    dirPath("package.json"),
+    packageJsonGenerator({ ext, cwd: dirPath() }),
+    { spaces: 2 }
+  );
 
   /**
    * After this point, there is a package.json in the project
    */
 
   if (skipInstalls) {
-    log.info("Skipping installs...")
+    log.info("Skipping installs...");
   } else {
     const installOpts = {
       cwd: dirPath(),
-      stdio: ("ignore" as const) || ("inherit" as const),
-      ...(npmClient ? { prefer: npmClient } : {}),
+      stdio: /* ("ignore" as const) || */ "inherit" as const,
+      ...{
+        prefer: npmClient as SupportedPackageManagers,
+      },
     };
 
     log.info("Managing dependencies...");
 
-    await writeJson(dirPath("package.json"), packageJsonGenerator({ ext, cwd: dirPath() }), { spaces: 2 });
+    await writeJson(
+      dirPath("package.json"),
+      packageJsonGenerator({ ext, cwd: dirPath() }),
+      { spaces: 2 }
+    );
 
-    log.info("Installing dependencies...");
+    log.info(`Installing dependencies (${npmClient})...`);
 
-    await install(
+    let installer = npmClient == "pnpm" ? installPnpm : install;
+
+    await installer(
       {
-        "@injex/core": "latest",
-        "@injex/node": "latest",
-        "@buzzybot/injex-discord-plugin": "latest",
+        "@injex/core": "3.5.1",
+        "@injex/node": "3.5.1",
+        "@injex/stdlib": "3.5.1",
+        "@buzzybot/injex-discord-plugin": pluginVersion,
+        "discord.js": "latest",
         dotenv: "latest",
       },
       installOpts
@@ -61,21 +97,18 @@ export const actionBzInitInstall = async (dir: string, opts: BzInitInstallOpts, 
 
     log.info("Installing development dependencies...");
 
-    await install(
+    await installer(
       {
-        "@buzzybot/cli": "latest",
-        "@babel/core": "latest",
-        "@babel/cli": "latest",
-        "@babel/plugin-transform-runtime": "latest",
-        "@babel/plugin-proposal-decorators": "latest",
-        "@babel/plugin-proposal-class-properties": "latest",
-        "@babel/plugin-proposal-private-property-in-object": "latest",
-        "@babel/plugin-proposal-private-methods": "latest",
+        "@buzzybot/cli": cliVersion,
         nodemon: "latest",
         rimraf: "latest",
-        "npm-run-all": "latest",
         ...(ext === "ts"
-          ? { typescript: "latest", "@babel/preset-typescript": "latest", "babel-plugin-module-resolver": "latest" }
+          ? {
+              "@swc/core": "latest",
+              typescript: "latest",
+              tslib: "latest",
+              tsup: "latest",
+            }
           : {}),
       },
       { ...installOpts, dev: true }
